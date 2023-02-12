@@ -8,7 +8,7 @@ class Place(models.Model):
     longitude = models.FloatField()
     osm_id = models.BigIntegerField()
     osm_type = models.CharField(max_length=255)
-    display_name = models.TextField(max_length=2000)
+    display_name = models.CharField(max_length=2000)
     category = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
     address = models.JSONField()
