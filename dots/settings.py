@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djoser',
     'drf_spectacular',
     'apps.places',
+    'apps.compilations',
 ]
 
 MIDDLEWARE = [
