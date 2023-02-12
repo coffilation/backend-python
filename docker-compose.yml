@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)'
+
+  traefik:
+    image: traefik:v2.9
+    ports:
+      - '80:80'
+      - '8080:8080'
+    command:
+      - '--api.insecure=true'
+      - '--providers.docker'
+      - '--providers.docker.exposedByDefault=false'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+volumes:
+  pgadmin:
