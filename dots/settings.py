@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'djoser',
     'drf_spectacular',
-    'dots.places',
+    'apps.places',
+    'apps.compilations',
 ]
 
 MIDDLEWARE = [
