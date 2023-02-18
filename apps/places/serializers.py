@@ -1,0 +1,66 @@
+from rest_framework import serializers
+from .models import Place
+
+
+class AddressSerializer(serializers.Serializer):
+    isolatedDwelling = serializers.CharField(allow_blank=True)
+    cityBlock = serializers.CharField(allow_blank=True)
+    houseNumber = serializers.CharField(allow_blank=True)
+    houseName = serializers.CharField(allow_blank=True)
+    manMade = serializers.CharField(allow_blank=True)
+    mountainPass = serializers.CharField(allow_blank=True)
+    stateDistrict = serializers.CharField(allow_blank=True)
+    countryCode = serializers.CharField(allow_blank=True)
+    cityDistrict = serializers.CharField(allow_blank=True)
+    amenity = serializers.CharField(allow_blank=True)
+    road = serializers.CharField(allow_blank=True)
+    district = serializers.CharField(allow_blank=True)
+    borough = serializers.CharField(allow_blank=True)
+    suburb = serializers.CharField(allow_blank=True)
+    subdivision = serializers.CharField(allow_blank=True)
+    hamlet = serializers.CharField(allow_blank=True)
+    croft = serializers.CharField(allow_blank=True)
+    neighbourhood = serializers.CharField(allow_blank=True)
+    allotments = serializers.CharField(allow_blank=True)
+    quarter = serializers.CharField(allow_blank=True)
+    residential = serializers.CharField(allow_blank=True)
+    farm = serializers.CharField(allow_blank=True)
+    farmyard = serializers.CharField(allow_blank=True)
+    industrial = serializers.CharField(allow_blank=True)
+    commercial = serializers.CharField(allow_blank=True)
+    retail = serializers.CharField(allow_blank=True)
+    emergency = serializers.CharField(allow_blank=True)
+    historic = serializers.CharField(allow_blank=True)
+    military = serializers.CharField(allow_blank=True)
+    natural = serializers.CharField(allow_blank=True)
+    landuse = serializers.CharField(allow_blank=True)
+    place = serializers.CharField(allow_blank=True)
+    railway = serializers.CharField(allow_blank=True)
+    aerialway = serializers.CharField(allow_blank=True)
+    boundary = serializers.CharField(allow_blank=True)
+    aeroway = serializers.CharField(allow_blank=True)
+    club = serializers.CharField(allow_blank=True)
+    craft = serializers.CharField(allow_blank=True)
+    leisure = serializers.CharField(allow_blank=True)
+    office = serializers.CharField(allow_blank=True)
+    shop = serializers.CharField(allow_blank=True)
+    tourism = serializers.CharField(allow_blank=True)
+    bridge = serializers.CharField(allow_blank=True)
+    tunnel = serializers.CharField(allow_blank=True)
+    waterway = serializers.CharField(allow_blank=True)
+    city = serializers.CharField(allow_blank=True)
+    town = serializers.CharField(allow_blank=True)
+    state = serializers.CharField(allow_blank=True)
+    village = serializers.CharField(allow_blank=True)
+    region = serializers.CharField(allow_blank=True)
+    postcode = serializers.CharField(allow_blank=True)
+    country = serializers.CharField(allow_blank=True)
+    municipality = serializers.CharField(allow_blank=True)
+
+
+class PlaceSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
+
+    class Meta:
+        model = Place
+        fields = '__all__'
