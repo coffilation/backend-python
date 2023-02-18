@@ -15,7 +15,7 @@ class CompilationViewSet(viewsets.ModelViewSet):
         return []
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save(author_id=self.request.user)
 
     @action(detail=True, methods=['put'])
     def places(self, request):

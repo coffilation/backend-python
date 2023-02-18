@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Compilation(models.Model):
     is_private = models.BooleanField(default=False)
     name = models.CharField(max_length=255)
-    description = models.CharField(max_length=2000)
+    description = models.CharField(max_length=2000, null=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     primary_color = models.CharField(max_length=7, null=True)
     secondary_color = models.CharField(max_length=7, null=True)

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'apps.places',
     'apps.compilations',
+    'apps.users',
 ]
 
 MIDDLEWARE = [
@@ -164,4 +165,7 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'LOGOUT_ON_PASSWORD_CHANGE': True,
+    'SERIALIZERS': {
+        'user': 'apps.users.serializers.UserSerializer',
+    },
 }
