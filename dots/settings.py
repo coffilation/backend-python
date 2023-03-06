@@ -170,5 +170,5 @@ DJOSER = {
     },
 }
 
-NOMINATIM_SEARCH_ENDPOINT = 'https://nominatim.openstreetmap.org/search'
-NOMINATIM_LOOKUP_ENDPOINT = 'https://nominatim.openstreetmap.org/lookup'
+NOMINATIM_SEARCH_ENDPOINT = ENV['NOMINATIM_SEARCH_ENDPOINT']
+NOMINATIM_LOOKUP_ENDPOINT = ENV['NOMINATIM_SEARCH_ENDPOINT']
