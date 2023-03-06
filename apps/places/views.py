@@ -89,7 +89,6 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
                 place_in_orm, created = Place.objects.get_or_create(
                     **self.get_place_object_from_nominatim_place(place),
                 )
-                print(place_in_orm)
                 response_places.append(place_in_orm)
 
             return Response(PlaceSerializer(response_places, many=True).data)

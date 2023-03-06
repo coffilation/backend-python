@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 from dotenv import dotenv_values
 
@@ -169,3 +169,6 @@ DJOSER = {
         'user': 'apps.users.serializers.UserSerializer',
     },
 }
+
+NOMINATIM_SEARCH_ENDPOINT = 'https://nominatim.openstreetmap.org/search'
+NOMINATIM_LOOKUP_ENDPOINT = 'https://nominatim.openstreetmap.org/lookup'
