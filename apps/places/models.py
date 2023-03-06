@@ -3,7 +3,6 @@ from django.db.models.constraints import UniqueConstraint
 
 
 class Place(models.Model):
-    name = models.CharField(max_length=255)
     latitude = models.FloatField()
     longitude = models.FloatField()
     osm_id = models.BigIntegerField()
@@ -14,4 +13,10 @@ class Place(models.Model):
     address = models.JSONField()
 
     class Meta:
-        constraints = [UniqueConstraint(fields=['osm_id', 'osm_type', 'category'], name='place_osm_identificators')]
+        constraints = [UniqueConstraint(
+            fields=['osm_id', 'osm_type', 'category'],
+            name='place_osm_identificators'
+        )]
+
+    def __str__(self):
+        return self.display_name
