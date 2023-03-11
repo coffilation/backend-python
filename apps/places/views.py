@@ -1,9 +1,9 @@
 from functools import reduce
 import requests
 from django.db.models import Q
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.response import Response
-from dots.settings import NOMINATIM_LOOKUP_ENDPOINT, NOMINATIM_SEARCH_ENDPOINT
+from dots.settings import NOMINATIM_LOOKUP_ENDPOINT, NOMINATIM_SEARCH_ENDPOINT, REST_FRAMEWORK
 from .serializers import *
 from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
@@ -15,12 +15,14 @@ class PlaceViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.Ge
 
 
 class NominatimPlaceViewSet(viewsets.GenericViewSet):
+    pagination_class = None
     osm_type_to_prefix = {
         'node': 'N',
         'way': 'W',
         'relation': 'R',
     }
     nominatim_request_params = {
+        'limit': REST_FRAMEWORK['PAGE_SIZE'],
         'format': 'jsonv2',
         'addressdetails': 1,
         'accept-language': 'ru',
@@ -69,7 +71,11 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
             return Response(status=status.HTTP_424_FAILED_DEPENDENCY)
 
     @extend_schema(
-        parameters=[NominatimSearchQuerySerializer],
+        parameters=[NominatimSearchQuerySerializer, OpenApiParameter(
+            'viewbox',
+            description='`x1,y1,x2,y2`\n\n`x` is longitude, `y` is latitude',
+            default='29.608218,60.049997,30.694038,59.760964',
+        )],
         responses=PlaceSerializer(many=True)
     )
     @action(detail=False, methods=['get'])
