@@ -12,14 +12,8 @@ class CompilationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Compilation
-        exclude = ('places',)
+        fields = ('primary_color', 'secondary_color', 'is_private', 'name', 'description', 'author')
         read_only_fields = ('author',)
-
-
-class CompilationPlaceSerializer(serializers.Serializer):
-    place_id = serializers.PrimaryKeyRelatedField(
-        queryset=Place.objects.all(),
-    )
 
 
 class CompilationPlacesSerializer(serializers.Serializer):

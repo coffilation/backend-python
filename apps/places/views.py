@@ -1,4 +1,6 @@
+from functools import reduce
 import requests
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from dots.settings import NOMINATIM_LOOKUP_ENDPOINT, NOMINATIM_SEARCH_ENDPOINT
@@ -46,7 +48,7 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
             return Response(PlaceSerializer(Place.objects.get(**serializer.data)).data)
 
         try:
-            data = requests.get(
+            lookup_data = requests.get(
                 NOMINATIM_LOOKUP_ENDPOINT,
                 params={
                     **self.nominatim_request_params,
@@ -55,7 +57,7 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
                     )
                 },
             ).json()
-            for place in data:
+            for place in lookup_data:
                 if place['category'] == serializer.data['category']:
                     place_in_orm = Place.objects.create(
                         **self.get_place_object_from_nominatim_place(place),
@@ -76,8 +78,7 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
 
         try:
-            response_places = []
-            data = requests.get(
+            search_data = requests.get(
                 NOMINATIM_SEARCH_ENDPOINT,
                 params={
                     **self.nominatim_request_params,
@@ -85,13 +86,28 @@ class NominatimPlaceViewSet(viewsets.GenericViewSet):
                     **serializer.data,
                 }
             ).json()
-            for place in data:
-                place_in_orm, created = Place.objects.get_or_create(
-                    **self.get_place_object_from_nominatim_place(place),
-                )
-                response_places.append(place_in_orm)
 
-            return Response(PlaceSerializer(response_places, many=True).data)
+            Place.objects.bulk_create(
+                [
+                    Place(**self.get_place_object_from_nominatim_place(place))
+                    for place in search_data
+                ],
+                ignore_conflicts=True
+            )
+
+            place_query = reduce(
+                lambda query, place: query | Q(
+                    osm_id=place['osm_id'],
+                    osm_type=place['osm_type'],
+                    category=place['category'],
+                ),
+                search_data,
+                Q(),
+            )
+
+            places_in_orm = Place.objects.filter(place_query)
+
+            return Response(PlaceSerializer(places_in_orm, many=True).data)
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_424_FAILED_DEPENDENCY)

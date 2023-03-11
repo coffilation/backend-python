@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-from datetime import timedelta
 from pathlib import Path
 from dotenv import dotenv_values
 
@@ -146,8 +145,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
-    'DESCRIPTION': 'Your project description',
+    'TITLE': 'Coffilation API',
     'VERSION': '1.0.0',
     'COMPONENT_SPLIT_REQUEST': True,
     'CAMELIZE_NAMES': True,

@@ -23,7 +23,7 @@ from apps.compilations.views import CompilationViewSet
 router = routers.DefaultRouter()
 router.register(r'places', PlaceViewSet, 'places')
 router.register(r'nominatim', NominatimPlaceViewSet, 'nominatim')
-router.register(r'compilation', CompilationViewSet, 'compilation')
+router.register(r'compilations', CompilationViewSet, 'compilation')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
